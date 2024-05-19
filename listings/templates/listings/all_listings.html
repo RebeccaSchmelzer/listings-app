@@ -1,6 +1,6 @@
 {% extends "listings/base.html" %}
 
-{% block content %}
+{%block content%}
 
 <h1>LISTINGS</h1>
 
@@ -15,8 +15,7 @@
             <p><b>Location:</b> {{ listing.city }}, {{ listing.state }}</p> 
             <p><b>Post Date:</b> {{ listing.list_date }}</p> 
             <ul>
-                <a class="btn" href="">View Listing</a>
-            </ul>
+                <a class="btn" href="{% url 'listings:detail' listing.id %}">View Listing</a>            </ul>
             <hr/>
         {% empty %}
             <h3>No listings found. Try again.</h3>
