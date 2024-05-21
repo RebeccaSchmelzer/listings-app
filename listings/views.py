@@ -23,7 +23,7 @@ def new_listing(request):
         form = ListingForm(request.POST, request.FILES)
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.user = request.saver
+            instance.user = request.user
             instance.save()
             form.save()
             return redirect('listings:all_listings')
@@ -36,8 +36,11 @@ def detail(request, detail_id):
     context = {'detail': detail}
     return render(request, 'listings/detail.html', context)
 
+from django.contrib.auth.decorators import login_required
+
+@login_required
 def my_listings(request):
-    my_listings = Listings.objects.order_by('-list_date')
+    my_listings = Listings.objects.filter(user=request.user).order_by('-list_date')
     context = {'my_listings': my_listings}
     return render(request, 'listings/my_listings.html', context)
 
